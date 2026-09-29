@@ -1,6 +1,6 @@
 ```mermaid
 erDiagram
-    rooms ||--o{ bookings : "має"
+    rooms ||--|| bookings : "має"
     guests ||--o{ bookings : "має"
 
     rooms {
