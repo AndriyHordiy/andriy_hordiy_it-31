@@ -3,13 +3,15 @@
 -- ("rooms"), as Practice 1 should have produced.
 
 PRAGMA foreign_keys = ON;
-
+DROP TABLE IF EXISTS bookings;
 DROP TABLE IF EXISTS rooms;
+DROP TABLE IF EXISTS guests;
+
 CREATE TABLE rooms (
     id INTEGER PRIMARY KEY,
     type TEXT NOT NULL,
-    price_per_night REAL NOT NULL,
-    capacity INTEGER,
+    price_per_night REAL NOT NULL CHECK(price_per_night > 0),
+    capacity INTEGER NOT NULL,
     status TEXT NOT NULL DEFAULT 'вільний'
 );
 
@@ -25,8 +27,8 @@ CREATE TABLE guests(
     id integer primary key,
     last_name string not null,
     first_name string not null,
-    email string not null,
-    phone string not null
+    email string not null DEFAULT"Гість не вказав ел. адресу =(",
+    phone string not null UNIQUE
 );
 INSERT INTO guests (last_name, first_name, email, phone) VALUES
 ('Шевченко', 'Олександр', 'shevchenko@gmail.com', '+380671234567'),
@@ -57,3 +59,20 @@ INSERT INTO bookings (room_id, guest_id, check_in_date, check_out_date) VALUES
 (3, 1, '2026-09-18', '2026-09-21'),
 (4, 6, '2026-09-20', '2026-09-25'),
 (5, 2, '2026-09-22', '2026-09-27');
+drop table guests_old
+
+--UPDATE rooms SET price_per_night = -1 WHERE id = 2;
+
+--INSERT INTO rooms (type, price_per_night, status)
+--VALUES ('Тест', 1000, 'вільний');
+
+--INSERT INTO guests (last_name, first_name, email, phone)
+--VALUES ('Тест', 'Гість', 'test@gmail.com', '+380671234567');
+
+--практична 6
+UPDATE rooms SET capacity = 3 WHERE id = 1;
+
+UPDATE bookings SET room_id = 2 WHERE id = 1;
+DELETE from bookings WHERE id=1;
+
+DELETE from rooms where id = 3;
